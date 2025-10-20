@@ -1,0 +1,251 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-size: cover; /* ปรับขนาดภาพพื้นหลังให้ครอบคลุมพื้นที่ทั้งหมด */
+    background-position: center; /* จัดภาพพื้นหลังให้อยู่กึ่งกลางเสมอ */
+    background-attachment: fixed; /* ตรึงภาพพื้นหลังไว้กับที่ ไม่เลื่อนตามเนื้อหา */
+    transition: background-image 0.5s ease;
+}
+
+.container {
+    display: flex;
+    flex-direction: column; 
+    height: 100%;
+}
+
+/* ส่วนบน (Top)*/
+.top {
+    flex: 2;
+    display: flex;
+    justify-content: center; /* จัดให้อยู่กึ่งกลางแนวนอน */
+}
+
+.logo {
+    height: 60px;
+    width: 60px;
+    max-height: none;
+    display: block;
+    cursor: pointer; /* เปลี่ยนเคอร์เซอร์เป็นรูปมือเมื่อชี้ */
+    border-radius: 50%; /* ทำให้รูปภาพมีลักษณะเป็นวงกลม */
+    border: 3px solid #FFD700; 
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 5px rgba(0, 0, 0, 0.5); 
+    object-fit: cover; /* ปรับภาพให้เต็มกรอบโดยอาจมีการตัดส่วนที่เกินไป */
+    background-color: #383838;
+    padding: 5px;
+    transition: transform 0.3s;
+}
+
+.logo:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.logo-link {
+    text-decoration: none; /* ลบขีดเส้นใต้ลิงก์ออก */
+}
+
+/* ส่วนล่าง (Lower)*/
+.lower {
+    flex: 8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* ซ่อนเนื้อหาที่ล้นขอบออกไป */
+    position: relative;
+}
+
+/* ภาพหลัก*/
+.image-wrapper {
+    width: 60%;
+    max-width: 400px;
+    height: 70%;
+    flex-grow: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-wrapper img {
+    max-height: 100%;
+    max-width: 100%;
+    width: auto;
+    object-fit: contain; /* ปรับขนาดภาพให้พอดีกับกรอบ โดยรักษาสัดส่วนและไม่ถูกตัด */
+    display: block; 
+    border-radius: 16px;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.image-wrapper img:hover {
+    transform: scale(1.4);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* Buttons: ใช้ตัวแปร CSS สำหรับเปลี่ยนสีตามธีม */
+.btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10; /* กำหนดลำดับชั้นให้อยู่เหนือองค์ประกอบอื่น ๆ */
+    padding: 12px 18px;
+    font-size: 40px;
+    cursor: pointer;
+    height: 35%;
+    width: 15%;
+    max-width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid var(--btn-border, #C89458); 
+    background-color: var(--btn-bg, rgba(90, 60, 30, 0.8));
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+    transition: all 0.3s ease;
+    color: #FFFFFF;
+}
+
+.btn.left {
+    left: 150px;
+}
+
+.btn.right {
+    right: 150px;
+}
+
+.btn:hover {
+    background-color: var(--btn-bg-hover, rgba(140, 90, 40, 0.9));
+    transform: translateY(-50%) scale(1.05);
+    color: #FFFFFF;
+    border-color: var(--btn-border-hover, #F8E4C4);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.9);
+}
+
+/* ภาพเล็กด้านล่าง*/
+.small-image {
+    padding: 15px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s ease;
+}
+
+.thumbnails {
+    display: flex;
+    gap: 15px;
+}
+
+.thumbnails a {
+    display: block;
+    background-color: var(--thumb-bg, rgba(90, 60, 30, 0.7)); 
+    border-radius: 12px;
+    padding: 8px;
+    line-height: 0;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.thumbnails img {
+    width: 60px;
+    height: 80px;
+    object-fit: cover;
+    display: block;
+    border-radius: 8px;
+    border: none;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+
+.thumbnails a.active {  /* สำหรับภาพย่อที่กำลังถูกแสดงอยู่ */
+    transform: scale(1.05);
+    animation: running-glow 4s infinite linear;
+    box-shadow: 0 0 4px var(--glow-color-light), 0 0 6px var(--glow-color-dark); 
+}
+
+.thumbnails img.active {
+    opacity: 1.0;
+}
+
+.thumbnails a:not(.active):hover { /* เมื่อนำเมาส์ไปชี้ที่ภาพย่อที่ไม่ได้ Active อยู่ */
+    background-color: var(--thumb-bg-hover, rgba(140, 90, 40, 0.9)); /* ใช้ตัวแปร Hover */
+    transform: scale(1.05);
+}
+
+/* ที่เพิ่มสำหรับ GIF ที่มุมซ้ายล่าง */
+#gif-container {
+    position: fixed;
+    bottom: 15px;
+    left: 150px;
+    z-index: 100;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.corner-gif {
+    width: 120px;
+    height: auto;
+    display: block;
+    border-radius: 10px; 
+    object-fit: contain;
+}
+
+/* สำหรับ Animation แบบเรืองแสงวิ่งวน  */
+@keyframes running-glow {
+    0% {
+        /* ใช้ตัวแปรสีสำหรับกรอบเรืองแสง */
+        box-shadow: -4px -4px 10px var(--glow-color-light, #F8E4C4), 4px 4px 10px var(--glow-color-dark, #C89458);
+    }
+    25% {
+        box-shadow: 4px -4px 10px var(--glow-color-light, #F8E4C4), -4px 4px 10px var(--glow-color-dark, #C89458);
+    }
+    50% {
+        box-shadow: 4px 4px 10px var(--glow-color-light, #F8E4C4), -4px -4px 10px var(--glow-color-dark, #C89458);
+    }
+    75% {
+        box-shadow: -4px 4px 10px var(--glow-color-light, #F8E4C4), 4px -4px 10px var(--glow-color-dark, #C89458);
+    }
+    100% {
+        box-shadow: -4px -4px 10px var(--glow-color-light, #F8E4C4), 4px 4px 10px var(--glow-color-dark, #C89458);
+    }
+}
+
+/* สำหรับอุปกรณ์ที่มีความกว้างสูงสุด(Tablet และมือถือ) */
+@media (max-width: 768px) {
+    
+    /* 1. ปุ่ม: ลดขนาดและนำปุ่มเข้ามาใกล้ภาพหลัก */
+    .btn {
+        width: 15%;
+        height: 30%;
+        font-size: 24px;
+        padding: 8px 12px;
+    }
+    .btn.left {
+        left: 5px; /* ชิดขอบจอมากขึ้น */
+    }
+    .btn.right {
+        right: 5px; /* ชิดขอบจอมากขึ้น */
+    }
+
+    /* ภาพหลัก: ให้ใช้พื้นที่จอมากขึ้น */
+    .image-wrapper {
+        width: 80%;
+        max-width: 90%; /* อนุญาตให้ขยายเกือบเต็มจอ */
+    }
+
+    /* ภาพเล็กด้านล่าง: ลดระยะห่างและขนาด */
+    .thumbnails {
+        gap: 10px;
+    }
+
+    .thumbnails img {
+        width: 50px; /* ลดขนาดภาพเล็ก */
+        height: 70px;
+    }
+    
+    /* ย้ายให้อยู่มุมซ้ายล่างสุด */
+    #gif-container {
+        left: 5px;
+        bottom: 5px;
+    }
+    .corner-gif {
+        width: 60px; /* ลดขนาด GIF อีก */
+    }
+}
