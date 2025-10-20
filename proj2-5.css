@@ -1,0 +1,339 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: linear-gradient(to top,
+            #161616 0%,
+            #1b1b1b 40%,
+            #5a4a15 80%,
+            #FFD700 100%
+        );
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-attachment: fixed;
+    box-shadow: inset 0 0 500px rgba(0, 0, 0, 0.95); 
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.top {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+}
+
+.header-logo {
+    height: 60px; /* เพิ่มขนาดเล็กน้อย */
+    width: 60px; /* ทำให้เป็นสี่เหลี่ยมจัตุรัส */
+    max-height: none; /* ลบค่า max-height เดิม */
+    display: block;
+    cursor: pointer;
+    border-radius: 50%; /* ทำให้เป็นวงกลม */
+    border: 3px solid #FFD700; /* กรอบสีทอง (Gold) */
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 5px rgba(0, 0, 0, 0.5); /* เงาเรืองแสงและเงาทั่วไป */
+    object-fit: cover; /* ปรับภาพให้เต็มวงกลม */
+    background-color: #383838; /* สีพื้นหลังเผื่อกรณีภาพเป็น PNG ใส */
+    padding: 5px; /* ระยะห่างระหว่างภาพกับขอบ */
+    transition: transform 0.3s; /* Animation เพื่อความสวยงาม */
+    /* ------------------------------ */
+}
+
+.header-logo:hover {
+    transform: scale(1.1) rotate(5deg); /* หมุนและขยายเล็กน้อยเมื่อเมาส์ชี้ */
+}
+
+.logo-link {
+    text-decoration: none;
+}
+
+@keyframes slideInButton {
+    0% { 
+        transform: translateX(-50px); /* เริ่มต้นจากด้านซ้ายนอกกรอบ */
+        opacity: 0; 
+    }
+    100% { 
+        transform: translateX(0); /* เลื่อนเข้าสู่ตำแหน่งปกติ */
+        opacity: 1; 
+    }
+}
+
+/* สำหรับปุ่มย้อนกลับ */
+.back-button {
+    position: absolute;
+    left: 20px;
+    top: 10px;
+    padding: 8px 15px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(4px);
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    z-index: 10;
+    opacity: 0; /* ซ่อนไว้ก่อนเริ่ม Animation */
+    transform: translateX(-50px); /* กำหนดตำแหน่งเริ่มต้น */
+    animation: slideInButton 0.5s ease-out 0.8s forwards; /* เล่น 0.5s หน่วง 0.8s */
+}
+
+.back-button:hover {
+    background-color: rgba(58, 58, 58, 0.4);
+    border-color: #ffffff;
+}
+
+.back-button:active {
+    transform: scale(0.95);
+}
+
+.main-content {
+    flex: 4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+#main-image {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    /* 1. กำหนด Transition เพื่อให้การเปลี่ยนแปลงนุ่มนวล */
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+    /* 2. สถานะเริ่มต้น: ซ่อนภาพ (opacity: 0) และเลื่อนภาพไปทางซ้าย (translateY) หรือทางอื่นที่ต้องการ */
+    opacity: 0;
+    transform: translateX(50px);
+    /* เลื่อนไปทางขวา 50px (นอกเฟรม) */
+    display: none;
+    /* โค้ดเดิม: ต้องซ่อนไว้ก่อนโหลด */
+}
+
+/* เพิ่มคลาสสำหรับสถานะ "แสดง" */
+.main-image-visible {
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+    /* เลื่อนกลับมาตำแหน่งเดิม (แสดง) */
+}
+
+#initial-message {
+    display: block;
+    margin-top: 20px;
+    font-family: 'Georgia', serif;
+    opacity: 0.95;
+    letter-spacing: 1px;
+}
+
+/* ส่วนแสดงภาพ */
+.image-gallery {
+    flex: 4.5;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    place-items: center;
+    padding: 20px;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    overflow-y: auto;
+    box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.image-gallery img {
+    width: 95%;
+    max-width: 95%;
+    height: 140px;
+    aspect-ratio: 3/2;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 3px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border 0.2s ease;
+    cursor: pointer;
+    display: block;
+}
+
+.image-gallery img:hover {
+    transform: scale(1.05);
+    border: 3px solid gold;
+    box-shadow: 0 6px 15px rgba(255, 215, 0, 0.5);
+}
+
+@keyframes slideUp {
+    0% {
+        transform: translateY(50px);
+        /* เริ่มต้นจากตำแหน่งที่ต่ำกว่าปกติ 50px */
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Animation: ค่อยๆ โผล่มา (Fade In) */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+
+/* --- การนำ Animation ไปใช้ --- */
+
+/* 1. โลโก้ Header: Warship.png */
+.header-logo {
+    height: 80%;
+    width: auto;
+    max-height: 50px;
+    display: block;
+    cursor: pointer;
+    /* ใช้ Fade In สำหรับโลโก้ */
+    animation: fadeIn 1s ease-out 0.2s forwards;
+    /* หน่วงเวลา 0.2s และคงสถานะสุดท้าย */
+    opacity: 0;
+    /* ซ่อนไว้ก่อนเริ่ม Animation */
+}
+
+/* 2. รูปภาพย่อใน Gallery (6 รูปด้านล่าง) */
+.image-gallery a {
+    /* เราจะใช้ tag a ในการควบคุม Animation แทน img เพื่อไม่ให้รบกวน :hover */
+    display: block;
+
+    /* ซ่อนรูปภาพเริ่มต้นและกำหนดตำแหน่งเริ่มต้นสำหรับการเลื่อน */
+    opacity: 0;
+    transform: translateY(50px);
+
+    /* ใช้ Slide Up */
+    animation: slideUp 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* กำหนด Delay ให้รูปภาพค่อยๆ โผล่มาทีละภาพ */
+.image-gallery a:nth-child(1) {
+    animation-delay: 0.4s;
+}
+
+.image-gallery a:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.image-gallery a:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+.image-gallery a:nth-child(4) {
+    animation-delay: 0.7s;
+}
+
+.image-gallery a:nth-child(5) {
+    animation-delay: 0.8s;
+}
+
+.image-gallery a:nth-child(6) {
+    animation-delay: 0.9s;
+}
+
+
+/* *** การปรับปรุงดีไซน์เพิ่มเติม *** */
+
+/* ปรับสีข้อความเริ่มต้นให้เข้ากับพื้นหลังทะเล */
+#initial-message {
+    display: block;
+    margin-top: 20px;
+    font-family: 'Georgia', serif;
+    opacity: 0.95;
+    letter-spacing: 1px;
+    color: #ffffff;
+    /* สีขาว */
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    /* เพิ่มเงา */
+}
+
+/* ปรับปรุงเมื่อเมาส์ชี้เข้า */
+.image-gallery img:hover {
+    transform: scale(1.05);
+    border: 3px solid #ffcc00;
+    /* ใช้สีทองที่สว่างขึ้น */
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.7);
+    /* เงาที่ชัดเจนขึ้น */
+}
+
+@keyframes running-glow {
+    0% {
+        /* เน้นแสงสว่างบน-ซ้าย (สีทองสว่าง) */
+        box-shadow:
+            -5px -5px 15px rgba(255, 204, 0, 0.9),
+            /* แสงสว่าง (สีทอง #FFCC00) */
+            5px 5px 15px rgba(200, 148, 88, 0.7);
+        /* เงาเข้ม (สีไม้/ทองเข้ม) */
+    }
+
+    25% {
+        /* เน้นแสงสว่างบน-ขวา */
+        box-shadow:
+            5px -5px 15px rgba(255, 230, 150, 0.9),
+            /* แสงสว่าง (สีทองอ่อน) */
+            -5px 5px 15px rgba(200, 148, 88, 0.7);
+    }
+
+    50% {
+        /* เน้นแสงสว่างล่าง-ขวา */
+        box-shadow:
+            5px 5px 15px rgba(255, 204, 0, 0.9),
+            /* แสงสว่าง (สีทอง #FFCC00) */
+            -5px -5px 15px rgba(200, 148, 88, 0.7);
+    }
+
+    75% {
+        /* เน้นแสงสว่างล่าง-ซ้าย */
+        box-shadow:
+            -5px 5px 15px rgba(255, 230, 150, 0.9),
+            /* แสงสว่าง (สีทองอ่อน) */
+            5px -5px 15px rgba(200, 148, 88, 0.7);
+    }
+
+    100% {
+        /* วนกลับไปจุดเริ่มต้น */
+        box-shadow:
+            -5px -5px 15px rgba(255, 204, 0, 0.9),
+            5px 5px 15px rgba(200, 148, 88, 0.7);
+    }
+}
+
+.image-gallery img {
+    border: 3px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border 0.2s ease;
+    cursor: pointer;
+    display: block;
+}
+
+.image-gallery img:hover {
+    transform: scale(1.08);
+    /* ขยายใหญ่ขึ้นอีกนิดเพื่อเน้น */
+    /* Border เมื่อ Hover */
+    border: 3px solid #FFCC00;
+    /* เรียกใช้ Animation */
+    animation: running-glow 2s infinite linear;
+    /* กำหนด box-shadow เริ่มต้นเพื่อไม่ให้หายไปเมื่อ Animation หยุด */
+    box-shadow: -5px -5px 15px rgba(255, 204, 0, 0.9), 5px 5px 15px rgba(200, 148, 88, 0.7);
+}

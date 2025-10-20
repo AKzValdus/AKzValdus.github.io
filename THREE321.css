@@ -1,0 +1,359 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Georgia', serif;
+}
+
+body {
+    height: 100%;
+    background-color: #121212;
+    display: flex;
+    flex-direction: column;
+    color: #F0F0F0;
+    min-height: 100vh;
+}
+
+/* --- ส่วนหัว --- */
+.top {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+}
+
+.header-logo {
+    height: 60px; /* เพิ่มขนาดเล็กน้อย */
+    width: 60px; /* ทำให้เป็นสี่เหลี่ยมจัตุรัส */
+    max-height: none; /* ลบค่า max-height เดิม */
+    display: block;
+    cursor: pointer;
+    border-radius: 50%; /* ทำให้เป็นวงกลม */
+    border: 3px solid #FFD700; /* กรอบสีทอง (Gold) */
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 5px rgba(0, 0, 0, 0.5); /* เงาเรืองแสงและเงาทั่วไป */
+    object-fit: cover; /* ปรับภาพให้เต็มวงกลม */
+    background-color: #383838; /* สีพื้นหลังเผื่อกรณีภาพเป็น PNG ใส */
+    padding: 5px; /* ระยะห่างระหว่างภาพกับขอบ */
+    transition: transform 0.3s; /* Animation เพื่อความสวยงาม */
+    /* ------------------------------ */
+}
+
+.header-logo:hover {
+    transform: scale(1.1) rotate(5deg); /* หมุนและขยายเล็กน้อยเมื่อเมาส์ชี้ */
+}
+
+.logo-link {
+    text-decoration: none;
+}
+
+@keyframes slideInButton {
+    0% { 
+        transform: translateX(-50px);
+        opacity: 0; 
+    }
+    100% { 
+        transform: translateX(0);
+        opacity: 1; 
+    }
+}
+
+.back-button {
+    position: absolute;
+    left: 20px;
+    top: 10px;
+    padding: 8px 15px;
+    background-color: #1E1E1E;
+    color: #F0F0F0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    z-index: 10;
+    opacity: 0;
+    transform: translateX(-50px);
+    animation: slideInButton 0.5s ease-out 0.8s forwards;
+}
+
+.back-button:hover {
+    background-color: #C8A210;
+}
+
+.back-button:active {
+    transform: scale(0.98);
+}
+
+/* --- เนื้อหาหลัก --- */
+.main-content {
+    flex: 1;
+    display: flex;
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+/* ครึ่งซ้าย: ภาพเรือ */
+.left-half {
+    flex: 1;
+    background-color: #121212;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    perspective: 1000px;
+    opacity: 0;
+    transform: translateX(-50px);
+    animation: slideInLeft 0.8s ease-out 0.4s forwards;
+}
+
+.feature-image {
+    width: auto;
+    height: auto;
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    display: block;
+    transition: transform 0.5s ease-out, filter 0.3s ease;
+}
+
+/* เอฟเฟกต์ 3D เมื่อเมาส์ชี้ */
+.feature-image:hover {
+    transform: scale(1.05) rotateY(1deg) translateZ(10px);
+    filter: drop-shadow(0 0 5px rgba(255, 204, 0, 0.3));
+}
+
+
+/* ครึ่งขวา: รายละเอียด */
+.right-half {
+    flex: 1;
+    background-color: #1E1E1E;
+    padding: 40px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: left;
+    border-left: 2px solid #C8A210;
+    opacity: 0;
+    transform: translateX(50px);
+    animation: slideInRight 0.8s ease-out 0.6s forwards;
+}
+
+.description-area h1 {
+    color: #FFD700;
+}
+
+.description-area ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.description-area li {
+    margin-bottom: 25px;
+    line-height: 1.8;
+    color: #F0F0F0;
+    border-left: 4px solid #C8A210;
+    padding-left: 15px;
+    opacity: 0;
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* ไล่การแสดงผลทีละรายการ (Staggered Animation) */
+.description-area li:nth-child(1) {
+    animation-delay: 1.2s;
+}
+
+.description-area li:nth-child(2) {
+    animation-delay: 1.4s;
+}
+
+.description-area li:nth-child(3) {
+    animation-delay: 1.6s;
+}
+
+
+/* จัดรูปแบบข้อความที่ใช้แท็ก */
+.description-area li strong {
+    color: #FFD700;
+}
+
+/* ลิงก์ข้อมูลเพิ่มเติม */
+.description-area a {
+    color: #FFD700;
+}
+
+.description-area a:hover {
+    color: #FFF;
+}
+
+/* --- ส่วนท้าย (แก้ไขใหม่เพื่อให้สวยงามและสมดุล) --- */
+.footer {
+    min-height: 120px;
+    background-color: #1E1E1E;
+    color: #C8A210;
+    
+    display: flex;
+    flex-direction: row; 
+    justify-content: space-between; 
+    align-items: center; 
+    
+    padding: 20px 40px; 
+    font-size: 0.85em;
+    border-top: 2px solid #C8A210;
+    opacity: 0;
+    animation: fadeIn 0.8s ease-out 1.8s forwards;
+    width: 100%; 
+}
+.footer-content-wrapper {
+    display: contents; 
+}
+
+/* จัดการไอคอน */
+.social-icons-container {
+    display: flex;
+    flex-direction: column; 
+    gap: 15px; 
+    align-items: flex-start; 
+    padding-left: 0; 
+    width: auto; 
+    max-width: none;
+}
+
+.social-icon-wrapper {
+    display: flex; 
+    align-items: center; 
+    text-decoration: none;
+    transition: transform 0.3s ease-in-out;
+    cursor: default; 
+}
+
+.social-icon {
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    width: 35px;
+    height: 35px;
+    color: #C8A210;
+    font-size: 28px; 
+    text-decoration: none; 
+    transition: all 0.3s ease-in-out;
+    margin-right: 15px; 
+    line-height: 1; 
+    transform: none; 
+}
+
+/* สไตล์สำหรับข้อความคำอธิบาย */
+.icon-label {
+    color: #F0F0F0;
+    font-size: 1.1em;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease-in-out;
+}
+
+/* เอฟเฟกต์เมื่อเมาส์วาง */
+.social-icon-wrapper:hover {
+    transform: translateX(5px);
+}
+
+/* ใช้ hover บน icon-wrapper เพื่อเปลี่ยนสี icon */
+.social-icon-wrapper:hover .social-icon {
+    color: #FFD700;
+    box-shadow: none; /* ลบเงาออก */
+}
+
+.social-icon-wrapper:hover .icon-label {
+    color: #FFD700; 
+}
+
+/* ⚠️ Media Query สำหรับหน้าจอขนาดเล็ก ⚠️ */
+@media (max-width: 768px) {
+    .footer {
+        flex-direction: column; 
+        align-items: flex-start; 
+        padding: 20px;
+        min-height: auto;
+    }
+
+    .social-icons-container {
+        margin-bottom: 15px;
+    }
+
+    .footer p {
+        text-align: left; 
+    }
+}
+
+/* การปรับขนาดหน้าจอ (โค้ดเดิม) */
+@media (max-width: 992px) {
+    .main-content {
+        flex-direction: column;
+    }
+
+    .left-half,
+    .right-half {
+        flex: none;
+        width: 100%;
+        min-height: auto;
+        border-left: none;
+    }
+
+    .right-half {
+        padding: 30px 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .top {
+        height: 50px;
+    }
+
+    .header-logo {
+        max-height: 40px;
+    }
+
+    .description-area li {
+        padding-left: 10px;
+    }
+}
+
+/* --- Keyframes สำหรับ Animation --- */
+
+/* 1. Animation: เลื่อนเข้าจากซ้าย (Slide-in Left) */
+@keyframes slideInLeft {
+    0% {
+        transform: translateX(-50px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* 2. Animation: เลื่อนเข้าจากขวา (Slide-in Right) */
+@keyframes slideInRight {
+    0% {
+        transform: translateX(50px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* 3. Animation: Fade In ธรรมดา */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
